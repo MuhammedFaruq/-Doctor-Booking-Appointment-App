@@ -1,0 +1,1334 @@
+/* =========================================================
+   GLOBAL STYLES
+   This part sets general page settings:
+   - Fonts
+   - Colors
+   - Reset spacing
+========================================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background: linear-gradient(79deg, #040c14, #0D47A1);
+  color: #333;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   HEADER & NAVIGATION BAR — Modern Blue Style
+========================================================= */
+header {
+  background: linear-gradient(90deg, #0A3D7B, rgb(0, 0, 0)  );
+  color: #fff;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #FFD700;
+}
+
+
+/* Auth buttons */
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.btn.primary-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.btn.primary-btn:hover {
+  background: #0056d2;
+}
+
+/* ================================
+   MOBILE MENU (SLIDE DRAWER)
+================================ */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Overlay behind drawer */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drawer container */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 60px 25px;
+  transition: right 0.4s ease;
+  z-index: 999;
+  border-radius: 10px;
+}
+
+.nav-drawer.active {
+  right: 0;
+}
+
+/* Drawer Links */
+.nav-drawer a {
+  text-decoration: none;
+  color: #000000;
+  padding: 11px 0;
+  font-weight: 400;
+  font-size: 1.4rem;
+  transition: color 0.3s;
+  background-color: #ffffff;
+}
+
+.nav-drawer a:hover {
+  background-color: #ffffff;
+  color: #0056d2;
+  transition: color 0.5s;
+}
+
+.close-drawer {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #000;
+}
+
+.drawer-auth {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: rgb(14, 13, 13);
+  font-size: 1rem;
+}
+
+/* Hide normal nav on mobile */
+@media (max-width: 768px) {
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .contact-info1 {
+    display: none; /* hide contact on small screens */
+  }
+
+  .header-nav {
+    display: none; /* hide default nav */
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+
+
+/* =========================================================
+   HERO SECTION (Top section with background image)
+========================================================= */
+.hero {
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1758691462123-8a17ae95d203?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1032')
+    center/cover no-repeat;
+  color: #fff;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+
+.hero h1 {
+  font-size: 2.8em;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay so text pops */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+
+
+.hero p {
+  font-size: 1.2em;
+  margin: 15px 0 25px;
+}
+
+.hero button {
+  background: #FFD700;
+  color: #003366;
+  padding: 14px 35px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.hero button:hover {
+  background: #0a0a0a;
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+
+/* =========================================================
+   GENERAL SECTION STYLE
+   Used for About, Services, Doctors, etc.
+========================================================= */
+section {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #1976D2;
+}
+
+/* =========================================================
+   FEATURE CARDS (Under Hero)
+========================================================= */
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  background: #fff;
+  padding: 50px 10%;
+  margin-top: -60px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+.feature-card h3 {
+  color: #0A3D7B;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 0.95em;
+}
+
+
+/* =========================================================
+   ABOUT SECTION
+========================================================= */
+.about p {
+  max-width: 700px;
+  margin: auto;
+  font-size: 1.1em;
+}
+
+/* =========================================================
+   SERVICES SECTION
+========================================================= */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-card h3 {
+  margin-bottom: 10px;
+  color: #2E7D32;
+}
+
+
+
+/* =========================================================
+   DOCTOR SECTION (Professional Modern Grid Layout)
+========================================================= */
+.doctors-section {
+    background:  #d8d7d9;
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.doctors-section h2.section-title {
+  color: #1976D2;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2em;
+  margin-bottom: 25px;
+}
+
+/* Doctor search area */
+.doctor-search {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.doctor-search input,
+.doctor-search select {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 1px solid #121212;
+  margin: 6px;
+  font-size: 0.95em;
+  width: 220px;
+}
+
+.doctor-search button {
+  background: #1976D2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.doctor-search button:hover {
+  background: #0D47A1;
+}
+
+/* Doctor cards grid layout */
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* ✅ makes it responsive */
+  gap: 30px;
+  justify-items: center;
+  align-items: stretch;
+  padding: 10px 0;
+}
+
+/* Individual doctor card */
+.doctors-grid .card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px 20px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctors-grid .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Doctor photo */
+.doctors-grid img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid #0056d2;
+}
+
+/* Doctor name & specialty */
+.doctors-grid h3 {
+  color: #1976D2;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15em;
+  margin-bottom: 5px;
+}
+
+.doctors-grid p {
+  color: #555;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+/* Fee text */
+.doctors-grid .fee {
+  color: #2E7D32;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Book button */
+.doctors-grid button {
+  background: #1976D2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.doctors-grid button:hover {
+  background: #0D47A1;
+}
+
+
+/* =========================================================
+   BOOKING MODAL — FIXED SIZE, PERFECTLY RESPONSIVE
+========================================================= */
+.booking-modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 3000;
+  padding: 20px;
+  overflow-y: auto; /* ✅ allows scrolling on smaller screens */
+  backdrop-filter: blur(3px);
+}
+
+/* Popup box */
+.booking-modal-content {
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 700px; /* ✅ smaller for desktop */
+  padding: 25px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+  margin: auto;
+}
+
+/* Close button */
+.booking-modal-content .close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 1.6em;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Modal layout */
+.booking-modal-content .modal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Left side (form) */
+.booking-modal-content .modal-left {
+  flex: 1.2;
+  min-width: 260px;
+}
+.booking-modal-content .modal-left label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95em;
+}
+.booking-modal-content .modal-left input,
+.booking-modal-content .modal-left select,
+.booking-modal-content .modal-left textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+.booking-modal-content .modal-left textarea {
+  height: 60px;
+  resize: vertical;
+}
+
+/* Right side (doctor info) */
+.booking-modal-content .modal-right {
+  flex: 0.8;
+  min-width: 240px;
+  background: #f7f9fb;
+  border-radius: 8px;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.booking-modal-content .modal-right img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Slots (time buttons) */
+.booking-modal-content .slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.booking-modal-content .slots button {
+  padding: 6px 10px;
+  background: #E3F2FD;
+  border: 1px solid #90CAF9;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.3s;
+}
+.booking-modal-content .slots button.active {
+  background: #1976D2;
+  color: #fff;
+}
+
+/* Confirm button */
+.booking-modal-content .confirm-btn {
+  margin-top: 15px;
+  background: #2E7D32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+.booking-modal-content .confirm-btn:hover {
+  background: #1B5E20;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .booking-modal-content {
+    width: 100%;
+    padding: 20px;
+  }
+  .booking-modal-content .modal-body {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .booking-modal-content .modal-right {
+    order: -1; /* Show doctor info first */
+    padding: 15px;
+  }
+}
+
+.my-appointments {
+  padding: 50px 10%;
+  background: #f8f9ff;
+  color: #222;
+}
+
+.appointments-list {
+  display: grid;
+  gap: 20px;
+}
+
+.appointment-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.appointment-card button {
+  background: #1976D2;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.appointment-card button:hover {
+  background: #0D47A1;
+}
+.receipt-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.download-btn, .done-btn {
+  background: #1976D2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.done-btn {
+  background: #28a745;
+}
+.done-btn:hover {
+  background: #218838;
+}
+
+
+/* ===========================================
+   PATIENT DASHBOARD POPUP STYLE
+=========================================== */
+.dashboard-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dashboard-content {
+  background: #fff;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 10px;
+  padding: 25px;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.dashboard-content h2 {
+  color: #0D47A1;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.appointment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background: #f9f9f9;
+}
+
+.appointment-card h3 {
+  color: #1976D2;
+  margin-bottom: 5px;
+}
+
+
+
+/* =========================================================
+   RECEIPT DESIGN (Confirmation slip after booking)
+========================================================= */
+#receiptSection {
+  display: none;
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  font-size: 1em;
+}
+
+/* Hospital name and address */
+.receipt-header {
+  text-align: center;
+  border-bottom: 3px solid #1976D2;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.receipt-header h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #1976D2;
+  font-size: 1.8em;
+  margin-bottom: 5px;
+}
+
+.receipt-header p {
+  color: #555;
+  font-size: 0.95em;
+}
+
+/* Each info row */
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.receipt-row strong {
+  color: #333;
+}
+
+/* Title and small note */
+#receiptSection h3 {
+  text-align: center;
+  color: #2E7D32;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+#receiptSection p.note {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+
+/* =========================================================
+   CONTACT SECTION (Professional Layout)
+========================================================= */
+#contact {
+  background: #f9fbfd;
+  padding: 70px 10%;
+}
+
+.contact-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+/* Left side info */
+.contact-info {
+  flex: 1;
+  min-width: 320px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.contact-info h3 {
+  color: #1976D2;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 10px;
+}
+
+.contact-info p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Right side form */
+.contact-form {
+  flex: 1;
+  min-width: 320px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.contact-form h3 {
+  color: #1976D2;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 15px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #1976D2;
+}
+
+.contact-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.contact-form button {
+  width: 100%;
+  padding: 12px;
+  background: #1976D2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #0D47A1;
+}
+
+/* =========================================================
+   FOOTER (Professional Layout)
+========================================================= */
+footer {
+ background: linear-gradient(90deg, #0A3D7B, rgb(0, 0, 0)  );
+  color: #fff;
+  padding: 40px 10% 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 20px;
+}
+
+.footer-info h3 {
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 10px;
+}
+
+.footer-info p {
+  margin: 6px 0;
+  font-size: 0.95em;
+}
+
+.footer-info a {
+  color: #FFC107;
+  text-decoration: none;
+}
+
+.footer-info a:hover {
+  text-decoration: underline;
+}
+
+/* Contact button in footer */
+.contact-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #FFC107;
+  color: #1976D2;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.contact-btn:hover {
+  background: #FFD54F;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-wrapper {
+    flex-direction: column;
+  }
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+
+
+/* =========================================================
+   RESPONSIVE DESIGN (For phones and tablets)
+========================================================= */
+@media (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .receipt-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   DOCTOR DASHBOARD STYLES
+   Page where doctors see their appointments
+========================================================= */
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  background: #1565C0;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+header a:hover {
+  background: #0D47A1;
+}
+
+/* Dashboard Container */
+.dashboard {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Dashboard title */
+.dashboard h2 {
+  text-align: center;
+  color: #1976D2;
+  margin-bottom: 20px;
+}
+
+/* Dropdown for selecting doctor */
+.doctor-select {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.doctor-select select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Table of appointments */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead {
+  background: #1976D2;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 13px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.92rem;
+}
+
+table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Status dropdown style */
+.status {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+/* Error message style for form validation */
+.error-message {
+  color: #e74c3c;       /* red color for visibility */
+  font-size: 13px;
+  margin-top: 4px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* ===== AUTH MODALS (Login & Register) ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60%;
+  overflow-y: auto;
+  background: #070707;
+  backdrop-filter: blur(5px);
+  padding: 20px 8px;
+  transition: all 0.3s ease;
+}
+
+/* Centered modal content */
+.modal-content {
+  background: #fff;
+  margin: auto;
+  padding: 30px 25px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 610px;
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Modal Header */
+.modal-content h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #0056d2;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0f0f0f;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #0056d2;
+}
+
+/* Form Inputs */
+.modal-content label {
+  display: block;
+  font-weight: 400;
+  color: #000000;
+  font-size: 0.95rem;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+  width: 100%;
+  height: 32px;
+  padding: 15px;
+  margin-bottom: 0;
+  border: 1px solid 0056d2;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.10s ease, box-shadow 0.3s ease;
+}
+
+.modal-content input:focus {
+  border-color: #0056d2;
+  box-shadow: 0 0 0 2px rgba(12, 12, 12, 0.1);
+  outline: no
+
+}
+
+.error-text {
+  color: #e63946;
+  font-size: 0.85rem;
+  margin-top: 2px;
+  display: block;
+}
+
+.error-text {
+  color: #e63946;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+}
+
+
+/* ---------- Input highlight when invalid ---------- */
+.input-error {
+  border: 1px solid #e63946 !important;
+  box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.06);
+}
+
+
+
+.field-error {
+  animation: fadeInError 0.18s ease both;
+}
+@keyframes fadeInError {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== BUTTON STYLES ==== */
+.btn {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #007bff;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.linklike:hover {
+  text-decoration: underline;
+}
+
+/* ==== MODAL BACKGROUND ==== */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.267);
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* ==== MODAL BOX ==== */
+.modal-content {
+  background-color: #ffffff;
+  color: #000000;
+  padding:17px 30px;
+  border-radius: 12px;
+  width: 380px;
+  height: 540px;
+  max-width:100%;
+  position: relative;
+  box-shadow: 0 0 0px rgba(0, 180, 255, 0.5);
+  animation: fadeIn 0.90s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+/* ==== CLOSE BUTTON ==== */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* ==== FORM ELEMENTS ==== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background-color: #fff;
+  color: black;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus {
+  border-color: #00b4ff;
+}
+
+/* ==== FORM NOTE ==== */
+.form-note {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ==== ERROR TEXT ==== */
+.error-text, .form-error {
+  color: #ff5555;
+  font-size: 13px;
+  height: 16px;
+}
+
+/* ==== RESPONSIVENESS ==== */
+@media (max-width: 500px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  input {
+    font-size: 14px;
+  }
+}
+

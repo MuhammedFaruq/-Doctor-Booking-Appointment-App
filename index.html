@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CityCare Hospital</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+
+ <!-- HEADER with logo, nav, contact -->
+<header class="header-main">
+  <div class="header-top">
+    <div class="logo">CityCare Hospital Kano 
+    </div>
+
+    <div class="contact-info1">
+      <span>+234 800 000 000</span> |
+      <span>info@citycare.com</span>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="menuBtn">☰</button>
+  </div>
+
+  <nav class="header-nav" id="nav-menu">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#doctors">Doctors</a></li>
+      <li><a href="#contact">Contact</a></li>
+
+      <!-- Desktop Auth Buttons -->
+      <div class="auth-buttons">
+        <button id="login-open" class="btn login-btn">Login</button>
+        <button id="register-open" class="btn primary-btn">Get Started</button>
+      </div>
+    </ul>
+  </nav>
+
+  <!-- Overlay & Drawer (for mobile) -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="nav-drawer" id="navDrawer">
+    <span class="close-drawer" id="closeDrawer">&times;</span>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#doctors">Doctors</a>
+    <a href="#contact">Contact</a>
+
+    <div class="drawer-auth">
+      <button id="login-open" class="btn login-btn">Login</button>
+      <button id="register-open" class="btn primary-btn">Get Started</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- HERO section with big background -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Book An Appointment with Doctors</h1>
+      <p>Your health matters. Schedule your visit now.</p>
+      <button type="button" class="hero-btn" onclick="document.getElementById('doctors').scrollIntoView({behavior:'smooth'})">
+        Book Appointment
+      </button>
+    </div>
+  </section>
+
+
+
+
+<!-- Register Modal -->
+<div class="modal" id="modal-register">
+  <div class="modal-content">
+    <button class="modal-close" data-close="modal-register">✕</button>
+    <h3>Create Account</h3>
+    <form id="register-form">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" name="firstname" required />
+        <small class="error-text" id="firstname-error"></small>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" name="lastname" required />
+        <small class="error-text" id="lastname-error"></small>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required autocomplete="email" />
+        <small class="error-text" id="email-error"></small>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" required autocomplete="new-password" />
+        <small class="error-text" id="password-error"></small>
+      </div>
+      <button class="btn btn-primary" type="submit">Register</button>
+      <p class="form-note">
+        Already have an account?
+        <button type="button" class="linklike" id="switch-to-login">Login</button>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal" id="modal-login">
+  <div class="modal-content">
+    <button class="modal-close" data-close="modal-login">✕</button>
+    <h3>Login</h3>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" name="email" required />
+      <small class="error-text" id="login-email-error"></small>
+
+      <label>Password</label>
+      <input type="password" name="password" required />
+      <small class="error-text" id="login-password-error"></small>
+
+      <label class="checkbox">
+        <input type="checkbox" name="remember" /> Remember me
+      </label>
+
+      <button class="btn btn-primary" type="submit">Login</button>
+      <p class="form-note">
+        No account?
+        <button type="button" class="linklike" id="switch-to-register">Register</button>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+  <!-- Feature / services section -->
+  <section class="features">
+    <div class="feature-card">
+      <img src="https://images.unsplash.com/photo-1666887360933-ad2ade9ae994?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870" width="200px" style="border-radius: 6px;">
+      <h3>Professional Staff</h3>
+      <p>Experienced and caring doctors.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://images.unsplash.com/photo-1666214277657-e60f05c40b04?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870" width="200px" style="border-radius: 6px;">
+      <h3>Affordable Prices</h3>
+      <p>Transparent fees, no hidden costs.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://images.unsplash.com/photo-1666887360921-85952a86894f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870" width="200px" style="border-radius: 6px;">
+      <h3>Great Services</h3>
+      <p>Comprehensive medical services.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://images.unsplash.com/photo-1700832082152-0416a3ee5e60?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=873" width="200px" style="border-radius: 6px;">
+      <h3>Free Consultation</h3>
+      <p>First consultation free of charge.</p>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services">
+      <div class="service-card"><h3>Cardiology</h3><img src="services doc 1.jpg" width="200px"><p>Heart health and care.</p></div>
+      <div class="service-card"><h3>Dermatology</h3><img src="services doc 3.jpg" width="130px"><p>Skin and beauty care.</p></div>
+      <div class="service-card"><h3>Pediatrics</h3><img src="services doc 2.jpg" width="200px"><p>Child health services.</p></div>
+      <div class="service-card"><h3>Emergency</h3><img src="services doc 4.jpg" width="170px"><p>24/7 urgent care.</p></div>
+      <div class="service-card"><h3>Accident</h3><img src="service doc 5.jpg" width="260px"><p>Immediate accident response.</p></div>
+      <div class="service-card"><h3>Dentistry</h3><img src="service doc 6.jpg" width="200px"><p>Oral and dental care.</p></div>
+    </div>
+  </section>
+
+  <!-- Doctors + Booking Panel -->
+  <section id="doctors" class="doctors-section">
+    <h2 class="section-title">Our Doctors</h2>
+
+    <div class="doctor-search">
+      <input id="doctorSearch" type="text" placeholder="Search doctor or specialty">
+      <select id="specialtyFilter"></select>
+      <button type="button" onclick="applyDoctorSearch()">Search</button>
+      <button type="button" onclick="resetDoctorFilters()">Reset</button>
+    </div>
+
+    <div id="doctorsContainer" class="doctors-grid"></div>
+  </section>
+
+  <!-- =====================================================
+     BOOKING MODAL + CONFIRMATION RECEIPT
+===================================================== -->
+<div class="booking-modal" id="bookingModal" role="dialog" aria-hidden="true">
+  <div class="booking-modal-content" role="document">
+    <button class="close-btn" type="button" onclick="closeBookingModal()" aria-label="Close">✕</button>
+
+    <h2 id="modalDocName">Book Appointment</h2>
+
+    <!-- =========================
+         BOOKING FORM
+    ========================== -->
+    <div class="modal-body" id="bookingFormSection">
+      <div class="modal-left">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" placeholder="Enter your name">
+        <div class="error-message" id="errorName"></div>
+
+        <label for="patientNumber">Phone Number:</label>
+        <input type="tel" id="patientNumber" placeholder="Enter your phone number">
+        <div class="error-message" id="errorNumber"></div>
+
+        <label for="modalDate">Select Date:</label>
+        <input type="date" id="modalDate">
+        <div class="error-message" id="errorDate"></div>
+
+        <label for="modalType">Appointment Type:</label>
+        <select id="modalType">
+          <option value="in-person">In-person</option>
+          <option value="telehealth">Telehealth</option>
+        </select>
+
+        <label>Select Time:</label>
+        <div id="modalSlots" class="slots" aria-label="available time slots"></div>
+        <div class="error-message" id="errorSlot"></div>
+
+        <label for="modalReason">Reason for Visit:</label>
+        <textarea id="modalReason" placeholder="Describe your symptoms..."></textarea>
+
+        <button class="confirm-btn" type="button" onclick="confirmModalBooking()">Confirm Booking</button>
+      </div>
+
+      <div class="modal-right">
+        <img id="modalAvatar" src="" alt="Doctor avatar">
+        <h3 id="modalDocShort"></h3>
+        <p id="modalSpec"></p>
+        <p id="modalLocation"></p>
+        <p id="modalSelectedSlot">Time: —</p>
+        <p id="modalFee">Fee: —</p>
+      </div>
+    </div>
+
+    <!-- =========================
+         RECEIPT SECTION
+    ========================== -->
+    <div id="receiptSection" style="display:none;">
+      <h2 style="color: #0056d2;"> Appointment Confirmed </h2><br>
+      <div id="receiptContent">
+        <p><strong>Patient:</strong> <span id="rPatient"></span></p>
+        <p><strong>Doctor:</strong> <span id="rDoctor"></span></p>
+        <p><strong>Specialty:</strong> <span id="rSpec"></span></p>
+        <p><strong>Location:</strong> <span id="rLocation"></span></p>
+        <p><strong>Date:</strong> <span id="rDate"></span></p>
+        <p><strong>Time:</strong> <span id="rTime"></span></p>
+        <p><strong>Type:</strong> <span id="rType"></span></p>
+        <p><strong>Phone:</strong> <span id="rNumber"></span></p>
+        <p><strong>Reason:</strong> <span id="rReason"></span></p>
+        <p><strong>Consultation Fee:</strong> <span id="rFee"></span></p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="receipt-buttons">
+        <button class="download-btn" onclick="downloadReceipt()"> Download Receipt</button>
+        <button class="done-btn" onclick="closeBookingModal()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <div id="receiptSection" class="receipt" style="display:none;">
+        <div class="receipt-header">
+          <h2>CityCare Hospital</h2>
+          <p>12 Nasawara GRA, Kano | +234 800 000 000 | info@citycare.com</p>
+        </div>
+        <h3>Appointment Confirmation</h3>
+        <div class="receipt-body">
+          <div class="receipt-row"><strong>Patient Name:</strong> <span id="rPatient"></span></div>
+          <div class="receipt-row"><strong>Doctor:</strong> <span id="rDoctor"></span></div>
+          <div class="receipt-row"><strong>Specialty:</strong> <span id="rSpec"></span></div>
+          <div class="receipt-row"><strong>Date:</strong> <span id="rDate"></span></div>
+          <div class="receipt-row"><strong>Time:</strong> <span id="rTime"></span></div>
+          <div class="receipt-row"><strong>Type:</strong> <span id="rType"></span></div>
+          <div class="receipt-row"><strong>Phone:</strong> <span id="rNumber"></span></div>
+          <div class="receipt-row"><strong>Reason:</strong> <span id="rReason"></span></div>
+          <div class="receipt-row"><strong>Fee:</strong> <span id="rFee"></span></div>
+        </div>
+        <p class="note">Please arrive 15 minutes earlier. Thanks for choosing us ❤️</p>
+        <button class="confirm-btn" type="button" onclick="closeBookingModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="testimonials">
+    <h2 class="section-title">What Our Patients Say</h2>
+    <div class="testimonials">
+      <div class="testimonial" style="color: #fff; font-size: 300;">“Fast booking and friendly doctors!”</div>
+      <div class="testimonial" style="color: #fff; font-size: 300;">“Telehealth appointments saved me time.”</div>
+      <div class="testimonial" style="color: #fff; font-size: 300;">“Great service and clean environment.”</div>
+    </div>
+  </section>
+
+  <!-- ================================
+     CONTACT SECTION
+================================ -->
+<section id="contact">
+  <h2 class="section-title">Get in Touch</h2>
+
+  <div class="contact-wrapper">
+    <!-- Left: Info & Map -->
+    <div class="contact-info">
+      <h3>CityCare Hospital</h3>
+      <p>12 Health Avenue, Sharada Phase 2, Kano, Nigeria</p>
+      <p>+234 800 000 000</p>
+      <p>info@citycare.com</p>
+
+      <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3938.836429330217!2d8.53921707472883!3d12.005819338391023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x11ae81904b2f3c8b%3A0x97b31c4ab1b2193!2sSharada%20Phase%202%2C%20Kano!5e0!3m2!1sen!2sng!4v1739112310011!5m2!1sen!2sng"
+  width="100%"
+  height="300"
+  style="border:0; border-radius: 8px;"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+ </iframe>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <form id="contactForm" class="contact-form">
+      <h3>Send Us a Message</h3>
+      <div class="form-group">
+        <input type="text" placeholder="Your Full Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Your Email Address" required>
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================================
+     FOOTER
+================================ -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-info">
+      <h3>CityCare Hospital</h3>
+      <p>12 Health Avenue, Sharada Phase 2 Kano, Nigeria</p>
+      <p>Email: <a href="mailto:info@citycare.com">info@citycare.com</a></p>
+      <p>Phone: +234 800 000 000</p>
+    </div>
+
+    <div class="footer-btn">
+      <a href="#contact" class="contact-btn">Contact Us</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 CityCare Hospital. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
