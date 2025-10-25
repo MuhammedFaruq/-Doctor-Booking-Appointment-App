@@ -1,20 +1,34 @@
 /* ===================================================
-   CityCare Hospital - Frontend JavaScript
+    CITYCARE HOSPITAL - FRONTEND SCRIPT
    ---------------------------------------------------
-   Handles:
-   - Doctor listing & search
-   - Booking appointments (UI only)
-   - User authentication modals (frontend validation)
-   - Contact form behavior
-   ---------------------------------------------------
-   Integration Note for Backend (Django):
-   LocalStorage parts will be replaced with real API calls.
+   AUTHOR: MUHAMMED FARUQ
+   LAST UPDATED: October 2025
+
+   DESCRIPTION:
+     This file manages all frontend interactions and UI
+     behaviors for the CityCare Hospital web application.
+
+   MODULES:
+     1. Doctor Listing & Search
+     2. Appointment Booking (UI + Validation)
+     3. User Authentication (Register / Login)
+     4. Logged-in UI Handling
+     5. Navigation Drawer (Responsive Menu)
+     6. Appointment Resume (Pending Booking)
+     7. Receipt Download (Save as Image)
+
+   NOTE:
+     - All data is handled on the client-side using LocalStorage.
+     - Designed for frontend demonstration purposes only.
    =================================================== */
 
 
-// ===================================================
-// 1. Doctor Data (Temporary)
-// ===================================================
+/* ===================================================
+   1. DOCTOR DATA (STATIC)
+   ---------------------------------------------------
+   Static list of available doctors. Each doctor object
+   contains name, specialty, clinic address, fee, and image.
+=================================================== */
 const doctors = [
   { name: "Dr. John Smith", specialty: "Cardiologist", location: "12 Health Avenue, Sharada Phase 2, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&q=80&w=387" },
   { name: "Dr. Lisa Morgan", specialty: "Dermatologist", location: "20 Court Road, Sabon Gari, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1666886573553-453e9cdbd967?auto=format&fit=crop&q=80&w=387" },
@@ -27,12 +41,19 @@ const doctors = [
   { name: "Dr. Adebayo Olamide", specialty: "Gynecologist", location: "Tarauni, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1672655412906-8e10ba6ee373?auto=format&fit=crop&q=80&w=786" }
 ];
 
-// ===================================================
-// 2. Render Doctors & Filter
-// ===================================================
+
+/* ===================================================
+   2. DOCTOR LISTING & FILTER
+   ---------------------------------------------------
+   Handles:
+   - Displaying all doctor cards on the homepage.
+   - Searching by name or specialty.
+   - Filtering by specific specialty.
+=================================================== */
 const doctorsContainer = document.getElementById("doctorsContainer");
 const specialtyFilter = document.getElementById("specialtyFilter");
 
+// Initialize specialties and populate dropdown
 (function initSpecialties() {
   const specs = [...new Set(doctors.map(d => d.specialty))];
   specialtyFilter.innerHTML = `<option value="">All Specialties</option>`;
@@ -45,6 +66,7 @@ const specialtyFilter = document.getElementById("specialtyFilter");
   renderDoctors(doctors);
 })();
 
+// Render doctor cards dynamically
 function renderDoctors(list) {
   doctorsContainer.innerHTML = "";
   list.forEach(doc => {
@@ -62,6 +84,7 @@ function renderDoctors(list) {
   });
 }
 
+// Search and filter doctors
 function applyDoctorSearch() {
   const search = (document.getElementById("doctorSearch").value || "").toLowerCase();
   const filter = specialtyFilter.value;
@@ -72,21 +95,31 @@ function applyDoctorSearch() {
   renderDoctors(filtered);
 }
 
+// Reset search and filters
 function resetDoctorFilters() {
   document.getElementById("doctorSearch").value = "";
   specialtyFilter.value = "";
   renderDoctors(doctors);
 }
 
-// ===================================================
-// 3. Booking & Confirmation
-// ===================================================
+
+/* ===================================================
+   3. BOOKING & CONFIRMATION
+   ---------------------------------------------------
+   Handles:
+   - Opening booking modal with doctor details.
+   - Selecting time slots.
+   - Validating form inputs.
+   - Displaying receipt confirmation.
+=================================================== */
 let currentDoctor = null;
 let selectedSlot = null;
 
+// Open booking modal for selected doctor
 function openBookingModal(docName) {
   const user = JSON.parse(localStorage.getItem("citycareUser"));
   if (!user) {
+    // If user is not logged in, prompt registration
     window.pendingDoctor = docName;
     window.pendingBooking = true;
     openModal(registerModal);
@@ -100,6 +133,7 @@ function openBookingModal(docName) {
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
 
+  // Fill doctor info in modal
   document.getElementById("modalDocName").textContent = `Book Appointment with ${currentDoctor.name}`;
   document.getElementById("modalDocShort").textContent = currentDoctor.name;
   document.getElementById("modalSpec").textContent = currentDoctor.specialty;
@@ -107,9 +141,11 @@ function openBookingModal(docName) {
   document.getElementById("modalFee").textContent = `Fee: ₦${currentDoctor.fee}`;
   document.getElementById("modalLocation").textContent = currentDoctor.location;
 
+  // Reset booking sections
   document.getElementById("bookingFormSection").style.display = "flex";
   document.getElementById("receiptSection").style.display = "none";
 
+  // Generate available time slots
   const slotsDiv = document.getElementById("modalSlots");
   slotsDiv.innerHTML = "";
   selectedSlot = null;
@@ -126,6 +162,7 @@ function openBookingModal(docName) {
   });
 }
 
+// Highlight selected time slot
 function selectSlot(slot, btn) {
   selectedSlot = slot;
   document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
@@ -133,8 +170,8 @@ function selectSlot(slot, btn) {
   document.getElementById("modalSelectedSlot").textContent = `Time: ${slot}`;
 }
 
+// Validate booking form inputs and show receipt
 function confirmModalBooking() {
-  // Get all values
   const nameInput = document.getElementById("patientName");
   const numberInput = document.getElementById("patientNumber");
   const dateInput = document.getElementById("modalDate");
@@ -147,12 +184,11 @@ function confirmModalBooking() {
   const reason = reasonInput.value.trim();
   const type = typeInput.value;
 
-  // Clear previous errors
+  // Clear previous validation messages
   document.querySelectorAll(".error-text").forEach(el => el.remove());
-
   let hasError = false;
 
-  // Helper function to show error under input
+  // Utility to display inline error messages
   function showError(input, message) {
     const error = document.createElement("small");
     error.className = "error-text";
@@ -164,7 +200,7 @@ function confirmModalBooking() {
     hasError = true;
   }
 
-  // Validation checks
+  // Field validation checks
   if (!name) showError(nameInput, "Please enter your name.");
   if (!number) showError(numberInput, "Please enter your phone number.");
   if (!date) showError(dateInput, "Please select a date.");
@@ -173,15 +209,14 @@ function confirmModalBooking() {
     const error = document.createElement("small");
     error.className = "error-text";
     error.style.color = "red";
-    error.style.fontSize = "13px";
     error.textContent = "Please select a time slot.";
     slotsDiv.insertAdjacentElement("afterend", error);
     hasError = true;
   }
 
-  if (hasError) return; // Stop form submission if there are errors
+  if (hasError) return; // Stop submission if any field is empty
 
-  // Proceed if no errors
+  // Save booking in localStorage
   const booking = {
     doctor: currentDoctor.name,
     specialty: currentDoctor.specialty,
@@ -195,16 +230,15 @@ function confirmModalBooking() {
     fee: currentDoctor.fee
   };
 
-  let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+  const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
   appointments.push(booking);
   localStorage.setItem("appointments", JSON.stringify(appointments));
 
   showConfirmationModal(booking);
 }
 
-
+// Display booking confirmation receipt
 function showConfirmationModal(booking) {
-  const modal = document.getElementById("bookingModal");
   document.getElementById("rPatient").textContent = booking.patient;
   document.getElementById("rDoctor").textContent = booking.doctor;
   document.getElementById("rSpec").textContent = booking.specialty;
@@ -220,21 +254,33 @@ function showConfirmationModal(booking) {
   document.getElementById("receiptSection").style.display = "block";
 }
 
+// Close booking modal
 function closeBookingModal() {
   document.getElementById("bookingModal").style.display = "none";
 }
 
-// ===================================================
-// 4. Authentication
-// ===================================================
+/* ===================================================
+   4. USER AUTHENTICATION (REGISTER & LOGIN)
+   ---------------------------------------------------
+   Handles:
+   - Registering new users
+   - Logging in existing users
+   - Updating UI when user is logged in
+   - Basic LocalStorage-based session
+=================================================== */
+
+// --- Modal References ---
 const registerModal = document.getElementById("modal-register");
 const loginModal = document.getElementById("modal-login");
+
+// --- Modal Buttons ---
 const registerOpenBtns = document.querySelectorAll("#register-open");
 const loginOpenBtns = document.querySelectorAll("#login-open");
 const modalCloseBtns = document.querySelectorAll("[data-close]");
 const switchToLogin = document.getElementById("switch-to-login");
 const switchToRegister = document.getElementById("switch-to-register");
 
+// --- Open / Close Modals ---
 registerOpenBtns.forEach(btn => btn.addEventListener("click", () => openModal(registerModal)));
 loginOpenBtns.forEach(btn => btn.addEventListener("click", () => openModal(loginModal)));
 modalCloseBtns.forEach(btn => btn.addEventListener("click", e => closeModal(document.getElementById(e.target.getAttribute("data-close")))));
@@ -244,20 +290,25 @@ switchToRegister.addEventListener("click", () => { closeModal(loginModal); openM
 function openModal(modal) { modal.style.display = "flex"; }
 function closeModal(modal) { modal.style.display = "none"; }
 
-// Register
+
+// --- REGISTER FUNCTION ---
 document.getElementById("register-form").addEventListener("submit", e => {
   e.preventDefault();
+
   const firstname = e.target.firstname.value.trim();
   const lastname = e.target.lastname.value.trim();
   const email = e.target.email.value.trim();
   const password = e.target.password.value.trim();
 
   const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
+
+  // Prevent duplicate account
   if (users.some(u => u.email === email)) {
-    alert("Account already exists.");
+    alert("Account already exists with this email.");
     return;
   }
 
+  // Save new user
   const newUser = { firstname, lastname, email, password };
   users.push(newUser);
   localStorage.setItem("citycareUsers", JSON.stringify(users));
@@ -269,31 +320,42 @@ document.getElementById("register-form").addEventListener("submit", e => {
   if (window.pendingBooking) continuePendingBooking();
 });
 
-// Login
+
+// --- LOGIN FUNCTION ---
 document.getElementById("login-form").addEventListener("submit", e => {
   e.preventDefault();
+
   const email = e.target.email.value.trim();
   const password = e.target.password.value.trim();
 
   const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
   const found = users.find(u => u.email === email && u.password === password);
-  if (!found) return alert("Invalid credentials.");
+
+  if (!found) {
+    alert("Invalid credentials. Please check your email and password.");
+    return;
+  }
 
   localStorage.setItem("citycareUser", JSON.stringify(found));
   closeModal(loginModal);
   showUserLoggedIn(found);
-  alert(`Welcome back, ${firstname}!`);
+  alert(`Welcome back, ${found.firstname}!`);
   if (window.pendingBooking) continuePendingBooking();
 });
 
-// ===================================================
-// 5. Show Logged-In User (Desktop + Mobile)
-// ===================================================
+
+/* ===================================================
+   5. LOGGED-IN USER DISPLAY (DESKTOP + MOBILE)
+   ---------------------------------------------------
+   Updates header and mobile drawer to show:
+   - Logged-in user’s name
+   - Logout button (works across both views)
+=================================================== */
 function showUserLoggedIn(user) {
   const headerAuth = document.querySelector(".auth-buttons");
   const drawerAuth = document.querySelector(".drawer-auth");
 
-  // Desktop
+  // --- Desktop header ---
   headerAuth.innerHTML = `
     <div class="user-menu">
       <span id="patientNameHeader">👤 ${user.firstname} ${user.lastname}</span>
@@ -301,7 +363,7 @@ function showUserLoggedIn(user) {
     </div>
   `;
 
-  // Mobile Drawer
+  // --- Mobile drawer ---
   drawerAuth.innerHTML = `
     <div class="user-menu">
       <span id="patientNameHeaderMobile">${user.firstname} ${user.lastname}</span>
@@ -309,24 +371,31 @@ function showUserLoggedIn(user) {
     </div>
   `;
 
-  // Logout both
+  // --- Add logout functionality ---
   document.getElementById("logout-btn").addEventListener("click", logoutUser);
   document.getElementById("logout-btn-mobile").addEventListener("click", logoutUser);
 }
 
+// --- Logout function ---
 function logoutUser() {
   localStorage.removeItem("citycareUser");
-  location.reload();
+  location.reload(); // Refresh page to reset UI
 }
 
+// --- On page load, check for saved user session ---
 window.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem("citycareUser"));
   if (user) showUserLoggedIn(user);
 });
 
-// ===================================================
-// 6. Pending Booking Resume
-// ===================================================
+
+/* ===================================================
+   6. RESUME PENDING BOOKING
+   ---------------------------------------------------
+   If a patient tries to book a doctor before logging in,
+   once they successfully log in, the pending booking 
+   will automatically reopen.
+=================================================== */
 function continuePendingBooking() {
   if (window.pendingDoctor) {
     openBookingModal(window.pendingDoctor);
@@ -335,9 +404,13 @@ function continuePendingBooking() {
   }
 }
 
-// ===================================================
-// 7. Navigation
-// ===================================================
+
+/* ===================================================
+   7. NAVIGATION DRAWER (MOBILE MENU)
+   ---------------------------------------------------
+   Handles opening/closing of the navigation drawer 
+   on mobile and auto-closes when resizing to desktop.
+=================================================== */
 const menuBtn = document.getElementById('menuBtn');
 const navDrawer = document.getElementById('navDrawer');
 const closeDrawer = document.getElementById('closeDrawer');
@@ -356,18 +429,19 @@ function closeMenu() {
   navOverlay.classList.remove('active');
 }
 
-// Auto close drawer when resizing back to desktop
+// Automatically close drawer when switching to desktop view
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) {
     closeMenu();
   }
 });
 
+
 /* ===================================================
-   8 DOWNLOAD RECEIPT FUNCTION
+   8. DOWNLOAD RECEIPT
    ---------------------------------------------------
-   Converts the confirmation receipt section to an image
-   and downloads it to the user's device.
+   Converts the appointment confirmation receipt into
+   an image (PNG) and downloads it to the user’s device.
 =================================================== */
 function downloadReceipt() {
   const receiptSection = document.getElementById("receiptSection");
@@ -377,25 +451,25 @@ function downloadReceipt() {
     return;
   }
 
-  // Disable button temporarily to prevent multiple clicks
   const downloadBtn = document.querySelector(".download-btn");
   downloadBtn.disabled = true;
-  downloadBtn.textContent = "Downloaded";
+  downloadBtn.textContent = "Downloading...";
 
-  html2canvas(receiptSection, { scale: 2 }).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "CityCare_ Doctor_Appointment_Receipt.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  html2canvas(receiptSection, { scale: 2 })
+    .then(canvas => {
+      const link = document.createElement("a");
+      link.download = "CityCare_Appointment_Receipt.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
 
-    // Re-enable button
-    downloadBtn.disabled = false;
-    downloadBtn.textContent = "Download Receipt";
-  }).catch(err => {
-    console.error("Error generating receipt:", err);
-    alert("Failed to download receipt. Please try again.");
-    downloadBtn.disabled = false;
-    downloadBtn.textContent = "Download Receipt";
-  });
+      // Reset button after download
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = "Download Receipt";
+    })
+    .catch(err => {
+      console.error("Error generating receipt:", err);
+      alert("Failed to download receipt. Please try again.");
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = "Download Receipt";
+    });
 }
-
