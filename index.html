@@ -27,7 +27,6 @@
   <nav class="header-nav" id="nav-menu">
     <ul>
       <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#doctors">Doctors</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -46,7 +45,6 @@
   <div class="nav-drawer" id="navDrawer">
     <span class="close-drawer" id="closeDrawer">&times;</span>
     <a href="#home">Home</a>
-    <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#doctors">Doctors</a>
     <a href="#contact">Contact</a>
@@ -174,32 +172,140 @@
     </div>
   </section>
 
-  <!-- Doctors + Booking Panel -->
-  <section id="doctors" class="doctors-section">
-    <h2 class="section-title">Our Doctors</h2>
+  <!-- Doctors Search + Booking Panel -->
+<section id="doctors" class="doctors-section">
+  <h2 class="section-title">Our Doctors</h2>
 
-    <div class="doctor-search">
-      <input id="doctorSearch" type="text" placeholder="Search doctor or specialty">
-      <select id="specialtyFilter"></select>
-      <button type="button" onclick="applyDoctorSearch()">Search</button>
-      <button type="button" onclick="resetDoctorFilters()">Reset</button>
+  <div class="doctor-search">
+    <input id="doctorSearch" type="text" placeholder="Search doctor or specialty">
+    <select id="specialtyFilter"></select>
+    <button type="button" onclick="applyDoctorSearch()">Search</button>
+    <button type="button" onclick="resetDoctorFilters()">Reset</button>
+  </div>
+
+  <!-- Doctors container section -->
+  <div id="doctorsContainer" class="doctors-grid">
+
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&q=80&w=387" alt="Dr. John Smith">
+      <h3>Dr. John Smith</h3>
+      <p class="specialty">Cardiologist</p>
+      <p>12 Health Avenue, Sharada Phase 2, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. John Smith', '₦8,000')">Book Appointment</button>
     </div>
 
-    <div id="doctorsContainer" class="doctors-grid"></div>
-  </section>
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1666886573553-453e9cdbd967?auto=format&fit=crop&q=80&w=387" alt="Dr. Lisa Morgan">
+      <h3>Dr. Lisa Morgan</h3>
+      <p class="specialty">Dermatologist</p>
+      <p>20 Court Road, Sabon Gari, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. Lisa Morgan', '₦8,000')">Book Appointment</button>
+    </div>
 
-  <!-- =====================================================
-     BOOKING MODAL + CONFIRMATION RECEIPT
-===================================================== -->
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1563116046-563efc1eab55?auto=format&fit=crop&q=80&w=386" alt="Dr. Blessing Ogechi">
+      <h3>Dr. Blessing Ogechi</h3>
+      <p class="specialty">Neurologist</p>
+      <p>31 Buk New Site, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. Blessing Ogechi', '₦8,000')">Book Appointment</button>
+    </div>
+
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1582895361887-24daa40c8667?auto=format&fit=crop&q=80&w=941" alt="Dr. Umar Musa">
+      <h3>Dr. Umar Musa</h3>
+      <p class="specialty">Pediatrician</p>
+      <p>44 Aminu Bello Way, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. Umar Musa', '₦8,000')">Book Appointment</button>
+    </div>
+
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?auto=format&fit=crop&q=80&w=420" alt="Dr. Aisha Muhammed">
+      <h3>Dr. Aisha Muhammed</h3>
+      <p class="specialty">Orthopedic</p>
+      <p>11B Gidan Plaza, Zoo Road, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. Aisha Muhammed', '₦8,000')">Book Appointment</button>
+    </div>
+
+    <div class="doctor-card">
+      <img src="https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?auto=format&fit=crop&q=60&w=500" alt="Dr. Joseph Fagge">
+      <h3>Dr. Joseph Fagge</h3>
+      <p class="specialty">Gynecologist</p>
+      <p>12 Avenue, Hajj Camp, Kano</p>
+      <p class="fee">₦8,000</p>
+      <button class="book-btn" onclick="openBookingModal('Dr. Joseph Fagge', '₦8,000')">Book Appointment</button>
+    </div>
+
+ <div class="doctor-card">
+  <img src="https://images.unsplash.com/photo-1755633400598-98b0bcb5a946?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870">
+  <h3>Dr. Sarah Adekine</h3>
+  <p class="specialty">Orthopedic</p>
+  <p>23 Bypass Road, Hotoro Kano</p>
+  <p class="fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr.Sarah Adekine', '₦8,000')">Book Appointment</button>
+</div>
+
+<div class="doctor-card">
+  <img src="https://media.istockphoto.com/id/2178198809/photo/male-nurse-standing-outdoors-wearing-medical-uniform-and-stethoscope-near-the-hospital.jpg?s=612x612&w=0&k=20&c=QVgBS3KBlcB6yoGqyO7sMUzQ9jbkqIZKro4fjCabCXw=">
+  <h3>Dr. Ali Muhammed</h3>
+  <p class="specialty">Cardiologist</p>
+  <p>789 Rijiya Lemo Kano</p>
+  <p class="fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr. Ail Muhammed', '₦8,000')">Book Appointment</button>
+</div>
+
+<div class="doctor-card">
+  <img src="https://media.istockphoto.com/id/1396651666/photo/mature-male-doctor-wearing-a-lab-coat-standing-in-a-hospital.jpg?s=612x612&w=0&k=20&c=L1NDINXTvgYOV13ddqDp7TkvZul0CoNHPfqv4ZD4bLw=">
+  <h3>Dr. Zakari Faruq</h3>
+  <p class="specialty">Dermatologist</p>
+  <p>46 Emir Palace Road Kano</p>
+  <p class="fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr. Zakari Faruq', '₦8,000')">Book Appointment</button>
+</div>
+
+<div class="doctor-card">
+  <img src="https://media.istockphoto.com/id/1922985278/photo/focused-adult-african-american-doctor-listen-breath-with-stethoscope.webp?a=1&s=612x612&w=0&k=20&c=dXVQ36H_gCWGGy3RW5lQ8gBQmn0MYfapdbozLZEqAAQ=">
+  <h3>Dr. Safina Muhammed</h3>
+  <p class="specialty">Dermatologist</p>
+  <p>294 Murtala muhammed way Kano</p>
+  <p class="fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr. Safina Muhammed', '₦8,000')">Book Appointment</button>
+</div>
+
+<div class="doctor-card">
+  <img src="https://media.istockphoto.com/id/1455610087/photo/portrait-of-a-senior-black-doctor-looking-at-the-camera.webp?a=1&s=612x612&w=0&k=20&c=z0JC5S-5wiiaHJuCRh-gvDwKzKeyw2mO4FVScYWywgU=">
+  <h3>Dr. Tunde Adebayo Taiwo</h3>
+  <p class="specialty">Pediatrician</p>
+  <p>483 Rumfar Kofar Naisa Kano</p>
+  <p class="fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr. Tunde Adebayo Taiwo', '₦8,000')">Book Appointment</button>
+</div>
+
+<div class="doctor-card">
+  <img src="https://media.istockphoto.com/id/455260289/photo/doctors.jpg?s=612x612&w=0&k=20&c=u4FSXVVtaHY8F3h__E_PtMrwUe-tyT_RigHL_sfpkws=">
+  <h3>Dr. Steven Okafor</h3>
+  <p class="specialty">Pediatrician</p>
+  <p>79 France Road Kano</p>
+  <p class="Fee">₦8,000</p>
+  <button class="book-btn" onclick="openBookingModal('Dr. Steven Okafor', '₦8,000')">Book Appointment</button>
+</div>
+  </div> 
+
+</section>
+
+
+  <!-- BOOKING MODAL + CONFIRMATION RECEIPT -->
 <div class="booking-modal" id="bookingModal" role="dialog" aria-hidden="true">
   <div class="booking-modal-content" role="document">
     <button class="close-btn" type="button" onclick="closeBookingModal()" aria-label="Close">✕</button>
 
     <h2 id="modalDocName">Book Appointment</h2>
 
-    <!-- =========================
-         BOOKING FORM
-    ========================== -->
+    <!-- BOOKING FORM -->
     <div class="modal-body" id="bookingFormSection">
       <div class="modal-left">
         <label for="patientName">Patient Name:</label>
@@ -221,13 +327,13 @@
         </select>
 
         <label>Select Time:</label>
-        <div id="modalSlots" class="slots" aria-label="available time slots"></div>
+        <div id="timeSlots" class="slots" aria-label="available time slots"></div>
         <div class="error-message" id="errorSlot"></div>
 
         <label for="modalReason">Reason for Visit:</label>
         <textarea id="modalReason" placeholder="Describe your symptoms..."></textarea>
 
-        <button class="confirm-btn" type="button" onclick="confirmModalBooking()">Confirm Booking</button>
+        <button class="confirm-btn" type="button" onclick="confirmBooking()">Confirm Booking</button>
       </div>
 
       <div class="modal-right">
@@ -240,13 +346,11 @@
       </div>
     </div>
 
-    <!-- =========================
-         RECEIPT SECTION
-    ========================== -->
+    <!-- RECEIPT SECTION -->
     <div id="receiptSection" style="display:none;">
       <h2 style="color: #0056d2;"> Appointment Confirmed </h2><br>
       <div id="receiptContent">
-        <p><strong>Patient:</strong> <span id="rPatient"></span></p>
+        <p><strong>Patient Name:</strong> <span id="rPatient"></span></p>
         <p><strong>Doctor:</strong> <span id="rDoctor"></span></p>
         <p><strong>Specialty:</strong> <span id="rSpec"></span></p>
         <p><strong>Location:</strong> <span id="rLocation"></span></p>
@@ -256,11 +360,12 @@
         <p><strong>Phone:</strong> <span id="rNumber"></span></p>
         <p><strong>Reason:</strong> <span id="rReason"></span></p>
         <p><strong>Consultation Fee:</strong> <span id="rFee"></span></p>
+        <p class="note"> Please Arrive 15 mins earlier before. Thanks For Choosen Us </p>
       </div>
 
       <!-- Action Buttons -->
       <div class="receipt-buttons">
-        <button class="download-btn" onclick="downloadReceipt()"> Download Receipt</button>
+        <button class="save-btn" onclick="saveReceipt()"> Save Receipt</button>
         <button class="done-btn" onclick="closeBookingModal()">Done</button>
       </div>
     </div>
@@ -268,28 +373,6 @@
 </div>
 
 
-      <div id="receiptSection" class="receipt" style="display:none;">
-        <div class="receipt-header">
-          <h2>CityCare Hospital</h2>
-          <p>12 Nasawara GRA, Kano | +234 800 000 000 | info@citycare.com</p>
-        </div>
-        <h3>Appointment Confirmation</h3>
-        <div class="receipt-body">
-          <div class="receipt-row"><strong>Patient Name:</strong> <span id="rPatient"></span></div>
-          <div class="receipt-row"><strong>Doctor:</strong> <span id="rDoctor"></span></div>
-          <div class="receipt-row"><strong>Specialty:</strong> <span id="rSpec"></span></div>
-          <div class="receipt-row"><strong>Date:</strong> <span id="rDate"></span></div>
-          <div class="receipt-row"><strong>Time:</strong> <span id="rTime"></span></div>
-          <div class="receipt-row"><strong>Type:</strong> <span id="rType"></span></div>
-          <div class="receipt-row"><strong>Phone:</strong> <span id="rNumber"></span></div>
-          <div class="receipt-row"><strong>Reason:</strong> <span id="rReason"></span></div>
-          <div class="receipt-row"><strong>Fee:</strong> <span id="rFee"></span></div>
-        </div>
-        <p class="note">Please arrive 15 minutes earlier. Thanks for choosing us ❤️</p>
-        <button class="confirm-btn" type="button" onclick="closeBookingModal()">Done</button>
-      </div>
-    </div>
-  </div>
 
   <section id="testimonials">
     <h2 class="section-title">What Our Patients Say</h2>
@@ -300,9 +383,7 @@
     </div>
   </section>
 
-  <!-- ================================
-     CONTACT SECTION
-================================ -->
+  <!-- CONTACT SECTION -->
 <section id="contact">
   <h2 class="section-title">Get in Touch</h2>
 
@@ -342,9 +423,7 @@
   </div>
 </section>
 
-<!-- ================================
-     FOOTER
-================================ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-content">
     <div class="footer-info">

@@ -1,157 +1,139 @@
-/* ===================================================
-    CITYCARE HOSPITAL - FRONTEND SCRIPT
+/*
+    CITYCARE HOSPITAL - FRONTEND SCRIPT (PROJECT)
    ---------------------------------------------------
-   AUTHOR: MUHAMMED FARUQ
+   DEVELOPER: MUHAMMED FARUQ
    LAST UPDATED: October 2025
 
    DESCRIPTION:
-     This file manages all frontend interactions and UI
-     behaviors for the CityCare Hospital web application.
+     This JavaScript file powers all the interactive 
+     features of the CityCare Hospital web application. 
+     It manages doctor listings, appointment booking, 
+     user authentication, and patient session handling. 
+     Designed for a smooth, responsive, and user-friendly 
+     hospital booking experience — all running entirely 
+     on the frontend using HTML, CSS, and JavaScript.
 
    MODULES:
-     1. Doctor Listing & Search
-     2. Appointment Booking (UI + Validation)
+     1. Doctor Search & Filter
+     2. Booking Modal & Appointment Validation
      3. User Authentication (Register / Login)
      4. Logged-in UI Handling
-     5. Navigation Drawer (Responsive Menu)
-     6. Appointment Resume (Pending Booking)
-     7. Receipt Download (Save as Image)
-
-   NOTE:
-     - All data is handled on the client-side using LocalStorage.
-     - Designed for frontend demonstration purposes only.
-   =================================================== */
+     5. Navigation Drawer (Responsive)
+     6. Resume Pending Bookings
+     7. Receipt Download (as Image)  
+   ----------------------------------------------------
+*/
 
 
-/* ===================================================
-   1. DOCTOR DATA (STATIC)
-   ---------------------------------------------------
-   Static list of available doctors. Each doctor object
-   contains name, specialty, clinic address, fee, and image.
-=================================================== */
-const doctors = [
-  { name: "Dr. John Smith", specialty: "Cardiologist", location: "12 Health Avenue, Sharada Phase 2, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&q=80&w=387" },
-  { name: "Dr. Lisa Morgan", specialty: "Dermatologist", location: "20 Court Road, Sabon Gari, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1666886573553-453e9cdbd967?auto=format&fit=crop&q=80&w=387" },
-  { name: "Dr. Blessing Ogechi", specialty: "Neurologist", location: "31 BUK New Site, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1563116046-563efc1eab55?auto=format&fit=crop&q=80&w=386" },
-  { name: "Dr. Umar Musa", specialty: "Pediatrician", location: "261 Ahmadu Bello Way, Nasarawa GRA Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1582895361887-24daa40c8667?auto=format&fit=crop&q=80&w=941" },
-  { name: "Dr. Aisha Muhammed", specialty: "Orthopedic", location: "158B Al-madina plaza, Zoo Road, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?auto=format&fit=crop&q=80&w=420" },
-  { name: "Dr. Joseph Fagbola", specialty: "Gynecologist", location: "12 Avenue, Haji camp, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?auto=format&fit=crop&q=60&w=500" },
-  { name: "Dr. Ali Sale", specialty: "Neurologist", location: "129 Health, Zaria Road, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1560856218-0da41ac7c66a?auto=format&fit=crop&q=60&w=500" },
-  { name: "Dr. Larry George", specialty: "Cardiologist", location: "129 Kundila Sheka, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1642736468880-b6adf66bdd50?auto=format&fit=crop&q=80&w=870" },
-  { name: "Dr. Adebayo Olamide", specialty: "Gynecologist", location: "Tarauni, Kano, Nigeria", fee: 8000, img: "https://images.unsplash.com/photo-1672655412906-8e10ba6ee373?auto=format&fit=crop&q=80&w=786" }
-];
+/* 1. DOCTOR SEARCH & FILTER */
+
+// Search doctors
+function applyDoctorSearch() {
+  const search = document.getElementById("doctorSearch").value.toLowerCase();
+  const filter = document.getElementById("specialtyFilter").value.toLowerCase();
+  const cards = document.querySelectorAll(".doctor-card");
+  
+  let visibleCount = 0; //Count how many doctors are visible
+
+  cards.forEach(card => {
+    const name = card.querySelector("h3").textContent.toLowerCase();
+    const specialty = card.querySelector(".specialty").textContent.toLowerCase();
+    const matchesSearch = name.includes(search) || specialty.includes(search);
+    const matchesFilter = filter === "" || specialty.includes(filter);
+    const isVisible = matchesSearch && matchesFilter;
+    
+    card.style.display = isVisible ? "block" : "none";
+    if (isVisible) visibleCount++;
+  });
+
+  // Check if no doctors match the search
+  let message = document.getElementById("noDoctorMessage");
+
+  if (!message) {
+    message = document.createElement("p");
+    message.id = "noDoctorMessage";
+    message.textContent = "No doctors found.";
+    message.style.textAlign = "center";
+    message.style.marginTop = "20px";
+    message.style.color = "#666";
+    document.getElementById("doctorsContainer").appendChild(message);
+  }
+
+  // Show or hide the message based on results
+  message.style.display = visibleCount === 0 ? "block" : "none";
+}
 
 
-/* ===================================================
-   2. DOCTOR LISTING & FILTER
-   ---------------------------------------------------
-   Handles:
-   - Displaying all doctor cards on the homepage.
-   - Searching by name or specialty.
-   - Filtering by specific specialty.
-=================================================== */
-const doctorsContainer = document.getElementById("doctorsContainer");
-const specialtyFilter = document.getElementById("specialtyFilter");
+// Reset filters and show all doctors
+function resetDoctorFilters() {
+  document.getElementById("doctorSearch").value = "";
+  document.getElementById("specialtyFilter").value = "";
+  document.querySelectorAll(".doctor-card").forEach(card => card.style.display = "block");
+}
 
-// Initialize specialties and populate dropdown
-(function initSpecialties() {
-  const specs = [...new Set(doctors.map(d => d.specialty))];
+// Load specialties into dropdown and restore user session
+window.addEventListener("DOMContentLoaded", () => {
+  const specialties = [...new Set([...document.querySelectorAll(".specialty")].map(s => s.textContent))];
+  const specialtyFilter = document.getElementById("specialtyFilter");
   specialtyFilter.innerHTML = `<option value="">All Specialties</option>`;
-  specs.forEach(spec => {
+  specialties.forEach(spec => {
     const opt = document.createElement("option");
     opt.value = spec;
     opt.textContent = spec;
     specialtyFilter.appendChild(opt);
   });
-  renderDoctors(doctors);
-})();
 
-// Render doctor cards dynamically
-function renderDoctors(list) {
-  doctorsContainer.innerHTML = "";
-  list.forEach(doc => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${doc.img}" alt="${doc.name}">
-      <h3>${doc.name}</h3>
-      <p>${doc.specialty}</p>
-      <p>${doc.location}</p>
-      <p class="fee">Fee: ₦${doc.fee}</p>
-      <button type="button" onclick="openBookingModal('${doc.name}')">Book Appointment</button>
-    `;
-    doctorsContainer.appendChild(card);
-  });
-}
-
-// Search and filter doctors
-function applyDoctorSearch() {
-  const search = (document.getElementById("doctorSearch").value || "").toLowerCase();
-  const filter = specialtyFilter.value;
-  const filtered = doctors.filter(d =>
-    (d.name.toLowerCase().includes(search) || d.specialty.toLowerCase().includes(search)) &&
-    (filter === "" || d.specialty === filter)
-  );
-  renderDoctors(filtered);
-}
-
-// Reset search and filters
-function resetDoctorFilters() {
-  document.getElementById("doctorSearch").value = "";
-  specialtyFilter.value = "";
-  renderDoctors(doctors);
-}
+  const user = JSON.parse(localStorage.getItem("citycareUser"));
+  if (user) showUserLoggedIn(user);
+});
 
 
-/* ===================================================
-   3. BOOKING & CONFIRMATION
-   ---------------------------------------------------
-   Handles:
-   - Opening booking modal with doctor details.
-   - Selecting time slots.
-   - Validating form inputs.
-   - Displaying receipt confirmation.
-=================================================== */
+/* 2. BOOKING & CONFIRMATION */
 let currentDoctor = null;
 let selectedSlot = null;
 
-// Open booking modal for selected doctor
-function openBookingModal(docName) {
+// Open booking modal 
+function openBookingModal(docName, fee) {
   const user = JSON.parse(localStorage.getItem("citycareUser"));
   if (!user) {
-    // If user is not logged in, prompt registration
+    // Ask user to register first
     window.pendingDoctor = docName;
     window.pendingBooking = true;
     openModal(registerModal);
     return;
   }
 
-  currentDoctor = doctors.find(d => d.name === docName);
-  if (!currentDoctor) return;
+  // Get doctor details from HTML
+  const card = [...document.querySelectorAll(".doctor-card")]
+    .find(c => c.querySelector("h3").textContent === docName);
+
+  
+
+  const specialty = card.querySelector(".specialty").textContent;
+  const location = card.querySelector("p:nth-of-type(2)").textContent;
+  const img = card.querySelector("img").src;
 
   const modal = document.getElementById("bookingModal");
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
 
-  // Fill doctor info in modal
-  document.getElementById("modalDocName").textContent = `Book Appointment with ${currentDoctor.name}`;
-  document.getElementById("modalDocShort").textContent = currentDoctor.name;
-  document.getElementById("modalSpec").textContent = currentDoctor.specialty;
-  document.getElementById("modalAvatar").src = currentDoctor.img;
-  document.getElementById("modalFee").textContent = `Fee: ₦${currentDoctor.fee}`;
-  document.getElementById("modalLocation").textContent = currentDoctor.location;
+  document.getElementById("modalDocName").textContent = `Book Appointment with ${docName}`;
+  document.getElementById("modalDocShort").textContent = docName;
+  document.getElementById("modalSpec").textContent = specialty;
+  document.getElementById("modalAvatar").src = img;
+  document.getElementById("modalFee").textContent = fee;
+  document.getElementById("modalLocation").textContent = location;
 
-  // Reset booking sections
   document.getElementById("bookingFormSection").style.display = "flex";
   document.getElementById("receiptSection").style.display = "none";
 
-  // Generate available time slots
-  const slotsDiv = document.getElementById("modalSlots");
+  // Generate time slots
+  const slotsDiv = document.getElementById("timeSlots");
   slotsDiv.innerHTML = "";
   selectedSlot = null;
   document.getElementById("modalSelectedSlot").textContent = "Time: —";
 
-  const slots = ["09:00 AM", "10:00 AM", "1:30 PM", "16:00 PM", "20:00 PM"];
+  const slots = ["09:00 AM", "10:00 AM", "1:30 PM", "4:00 PM", "8:00 PM"];
   slots.forEach(time => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -162,7 +144,7 @@ function openBookingModal(docName) {
   });
 }
 
-// Highlight selected time slot
+// Select time slot
 function selectSlot(slot, btn) {
   selectedSlot = slot;
   document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
@@ -170,8 +152,8 @@ function selectSlot(slot, btn) {
   document.getElementById("modalSelectedSlot").textContent = `Time: ${slot}`;
 }
 
-// Validate booking form inputs and show receipt
-function confirmModalBooking() {
+// Confirm booking and save
+function confirmBooking() {
   const nameInput = document.getElementById("patientName");
   const numberInput = document.getElementById("patientNumber");
   const dateInput = document.getElementById("modalDate");
@@ -184,28 +166,24 @@ function confirmModalBooking() {
   const reason = reasonInput.value.trim();
   const type = typeInput.value;
 
-  // Clear previous validation messages
+  // Clear old errors
   document.querySelectorAll(".error-text").forEach(el => el.remove());
   let hasError = false;
 
-  // Utility to display inline error messages
-  function showError(input, message) {
+  function showInputError(input, message) {
     const error = document.createElement("small");
     error.className = "error-text";
     error.style.color = "red";
-    error.style.fontSize = "13px";
-    error.style.marginTop = "3px";
     error.textContent = message;
     input.insertAdjacentElement("afterend", error);
     hasError = true;
   }
 
-  // Field validation checks
-  if (!name) showError(nameInput, "Please enter your name.");
-  if (!number) showError(numberInput, "Please enter your phone number.");
-  if (!date) showError(dateInput, "Please select a date.");
+  if (!name) showInputError(nameInput, "Please enter your name");
+  if (!number) showInputError(numberInput, "Please enter your phone number");
+  if (!date) showInputError(dateInput, "Please select a date.");
   if (!selectedSlot) {
-    const slotsDiv = document.getElementById("modalSlots");
+    const slotsDiv = document.getElementById("timeSlots");
     const error = document.createElement("small");
     error.className = "error-text";
     error.style.color = "red";
@@ -214,20 +192,21 @@ function confirmModalBooking() {
     hasError = true;
   }
 
-  if (hasError) return; // Stop submission if any field is empty
+  if (hasError) return;
 
-  // Save booking in localStorage
+  // Save booking to localStorage
   const booking = {
-    doctor: currentDoctor.name,
-    specialty: currentDoctor.specialty,
-    location: currentDoctor.location,
+    doctor: document.getElementById("modalDocShort").textContent,
+    specialty: document.getElementById("modalSpec").textContent,
+    location: document.getElementById("modalLocation").textContent,
     patient: name,
     number,
     date,
     time: selectedSlot,
     type,
     reason,
-    fee: currentDoctor.fee
+    fee: document.getElementById("modalFee").textContent.replace("Fee: ", ""),
+    status: "Pending"
   };
 
   const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
@@ -237,7 +216,7 @@ function confirmModalBooking() {
   showConfirmationModal(booking);
 }
 
-// Display booking confirmation receipt
+// Show confirmation receipt
 function showConfirmationModal(booking) {
   document.getElementById("rPatient").textContent = booking.patient;
   document.getElementById("rDoctor").textContent = booking.doctor;
@@ -248,7 +227,7 @@ function showConfirmationModal(booking) {
   document.getElementById("rType").textContent = booking.type;
   document.getElementById("rNumber").textContent = booking.number;
   document.getElementById("rReason").textContent = booking.reason || "N/A";
-  document.getElementById("rFee").textContent = `₦${booking.fee}`;
+  document.getElementById("rFee").textContent = booking.fee;
 
   document.getElementById("bookingFormSection").style.display = "none";
   document.getElementById("receiptSection").style.display = "block";
@@ -259,28 +238,20 @@ function closeBookingModal() {
   document.getElementById("bookingModal").style.display = "none";
 }
 
-/* ===================================================
-   4. USER AUTHENTICATION (REGISTER & LOGIN)
-   ---------------------------------------------------
-   Handles:
-   - Registering new users
-   - Logging in existing users
-   - Updating UI when user is logged in
-   - Basic LocalStorage-based session
-=================================================== */
 
-// --- Modal References ---
+/* 3. USER AUTHENTICATION (REGISTER / LOGIN) */
+
 const registerModal = document.getElementById("modal-register");
 const loginModal = document.getElementById("modal-login");
 
-// --- Modal Buttons ---
+// Buttons and links for opening/closing modals
 const registerOpenBtns = document.querySelectorAll("#register-open");
 const loginOpenBtns = document.querySelectorAll("#login-open");
 const modalCloseBtns = document.querySelectorAll("[data-close]");
 const switchToLogin = document.getElementById("switch-to-login");
 const switchToRegister = document.getElementById("switch-to-register");
 
-// --- Open / Close Modals ---
+// Modal open/close functionality
 registerOpenBtns.forEach(btn => btn.addEventListener("click", () => openModal(registerModal)));
 loginOpenBtns.forEach(btn => btn.addEventListener("click", () => openModal(loginModal)));
 modalCloseBtns.forEach(btn => btn.addEventListener("click", e => closeModal(document.getElementById(e.target.getAttribute("data-close")))));
@@ -291,71 +262,150 @@ function openModal(modal) { modal.style.display = "flex"; }
 function closeModal(modal) { modal.style.display = "none"; }
 
 
-// --- REGISTER FUNCTION ---
+// REGISTER FUNCTION //
 document.getElementById("register-form").addEventListener("submit", e => {
   e.preventDefault();
 
+  // Get user input
   const firstname = e.target.firstname.value.trim();
   const lastname = e.target.lastname.value.trim();
   const email = e.target.email.value.trim();
   const password = e.target.password.value.trim();
 
-  const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
+  // Get error message 
+  const firstnameError = document.getElementById("firstname-error");
+  const lastnameError = document.getElementById("lastname-error");
+  const emailError = document.getElementById("email-error");
+  const passwordError = document.getElementById("password-error");
 
-  // Prevent duplicate account
+  // Clear any previous error messages
+  [firstnameError, lastnameError, emailError, passwordError].forEach(el => el.textContent = "");
+
+  let hasError = false;
+
+  // Validate first name (at least 5 letters)
+  if (!firstname) {
+    firstnameError.textContent = "Please enter your first name.";
+    hasError = true;
+  } else if (firstname.length < 5) {
+    firstnameError.textContent = "First name must be at least 5 letters.";
+    hasError = true;
+  }
+
+  // Validate last name (at least 4 letters)
+  if (!lastname) {
+    lastnameError.textContent = "Please enter your last name.";
+    hasError = true;
+  } else if (lastname.length < 4) {
+    lastnameError.textContent = "Last name must be at least 4 letters.";
+    hasError = true;
+  }
+
+  // Validate email format
+  if (!email) {
+    emailError.textContent = "Please enter your email address.";
+    hasError = true;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailError.textContent = "Please enter a valid email address.";
+    hasError = true;
+  }
+
+  // Validate password (min 6 characters)
+  if (!password) {
+    passwordError.textContent = "Please enter your password.";
+    hasError = true;
+  } else if (password.length < 6) {
+    passwordError.textContent = "Password must be at least 6 characters long.";
+    hasError = true;
+  }
+
+  if (hasError) return; // Stop if there’s any error
+
+  // Check if email already exists
+  const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
   if (users.some(u => u.email === email)) {
-    alert("Account already exists with this email.");
+    emailError.textContent = "An account already exists with this email.";
     return;
   }
 
-  // Save new user
+  // Save new user data in localStorage
   const newUser = { firstname, lastname, email, password };
   users.push(newUser);
   localStorage.setItem("citycareUsers", JSON.stringify(users));
   localStorage.setItem("citycareUser", JSON.stringify(newUser));
 
+  // Close modal and show welcome message
   closeModal(registerModal);
   showUserLoggedIn(newUser);
-  alert(`Welcome, ${firstname}!`);
+  alert(`Welcome, ${firstname} ${lastname}`);
+
+  // If booking was pending before registration, continue it
   if (window.pendingBooking) continuePendingBooking();
 });
 
 
-// --- LOGIN FUNCTION ---
+// LOGIN FUNCTION //
 document.getElementById("login-form").addEventListener("submit", e => {
   e.preventDefault();
 
+  // Get login inputs
   const email = e.target.email.value.trim();
   const password = e.target.password.value.trim();
 
-  const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
-  const found = users.find(u => u.email === email && u.password === password);
+  const emailError = document.getElementById("login-email-error");
+  const passwordError = document.getElementById("login-password-error");
 
-  if (!found) {
-    alert("Invalid credentials. Please check your email and password.");
+  // Clear old errors
+  emailError.textContent = "";
+  passwordError.textContent = "";
+
+  let hasError = false;
+
+  // Validate email
+  if (!email) {
+    emailError.textContent = "Please enter your email address.";
+    hasError = true;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailError.textContent = "Please enter a valid email address.";
+    hasError = true;
+  }
+
+  // Validate password
+  if (!password) {
+    passwordError.textContent = "Please enter your password.";
+    hasError = true;
+  } else if (password.length < 6) {
+    passwordError.textContent = "Password must be at least 6 characters long.";
+    hasError = true;
+  }
+
+  if (hasError) return; // Stop if invalid input
+
+  // Check if user exists and credentials match
+  const users = JSON.parse(localStorage.getItem("citycareUsers")) || [];
+  const foundUser = users.find(u => u.email === email && u.password === password);
+
+  if (!foundUser) {
+    passwordError.textContent = "Invalid email or password.";
     return;
   }
 
-  localStorage.setItem("citycareUser", JSON.stringify(found));
+  // Store logged-in user and update UI
+  localStorage.setItem("citycareUser", JSON.stringify(foundUser));
   closeModal(loginModal);
-  showUserLoggedIn(found);
-  alert(`Welcome back, ${found.firstname}!`);
+  showUserLoggedIn(foundUser);
+
+  alert(`Welcome back, ${foundUser.firstname}!`);
+
+  // Continue any pending booking
   if (window.pendingBooking) continuePendingBooking();
 });
 
-
-/* ===================================================
-   5. LOGGED-IN USER DISPLAY (DESKTOP + MOBILE)
-   ---------------------------------------------------
-   Updates header and mobile drawer to show:
-   - Logged-in user’s name
-   - Logout button (works across both views)
-=================================================== */
+/* 4. LOGGED-IN USER DISPLAY */
 function showUserLoggedIn(user) {
   const headerAuth = document.querySelector(".auth-buttons");
   const drawerAuth = document.querySelector(".drawer-auth");
 
-  // --- Desktop header ---
   headerAuth.innerHTML = `
     <div class="user-menu">
       <span id="patientNameHeader">👤 ${user.firstname} ${user.lastname}</span>
@@ -363,7 +413,6 @@ function showUserLoggedIn(user) {
     </div>
   `;
 
-  // --- Mobile drawer ---
   drawerAuth.innerHTML = `
     <div class="user-menu">
       <span id="patientNameHeaderMobile">${user.firstname} ${user.lastname}</span>
@@ -371,31 +420,17 @@ function showUserLoggedIn(user) {
     </div>
   `;
 
-  // --- Add logout functionality ---
   document.getElementById("logout-btn").addEventListener("click", logoutUser);
   document.getElementById("logout-btn-mobile").addEventListener("click", logoutUser);
 }
 
-// --- Logout function ---
 function logoutUser() {
   localStorage.removeItem("citycareUser");
-  location.reload(); // Refresh page to reset UI
+  location.reload();
 }
 
-// --- On page load, check for saved user session ---
-window.addEventListener("DOMContentLoaded", () => {
-  const user = JSON.parse(localStorage.getItem("citycareUser"));
-  if (user) showUserLoggedIn(user);
-});
 
-
-/* ===================================================
-   6. RESUME PENDING BOOKING
-   ---------------------------------------------------
-   If a patient tries to book a doctor before logging in,
-   once they successfully log in, the pending booking 
-   will automatically reopen.
-=================================================== */
+/* 5. RESUME PENDING BOOKING */
 function continuePendingBooking() {
   if (window.pendingDoctor) {
     openBookingModal(window.pendingDoctor);
@@ -405,12 +440,7 @@ function continuePendingBooking() {
 }
 
 
-/* ===================================================
-   7. NAVIGATION DRAWER (MOBILE MENU)
-   ---------------------------------------------------
-   Handles opening/closing of the navigation drawer 
-   on mobile and auto-closes when resizing to desktop.
-=================================================== */
+/* 6. NAVIGATION DRAWER (MOBILE) */
 const menuBtn = document.getElementById('menuBtn');
 const navDrawer = document.getElementById('navDrawer');
 const closeDrawer = document.getElementById('closeDrawer');
@@ -429,7 +459,6 @@ function closeMenu() {
   navOverlay.classList.remove('active');
 }
 
-// Automatically close drawer when switching to desktop view
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) {
     closeMenu();
@@ -437,23 +466,14 @@ window.addEventListener('resize', () => {
 });
 
 
-/* ===================================================
-   8. DOWNLOAD RECEIPT
-   ---------------------------------------------------
-   Converts the appointment confirmation receipt into
-   an image (PNG) and downloads it to the user’s device.
-=================================================== */
-function downloadReceipt() {
+/* 7. SAVE RECEIPT */
+function saveReceipt() {
   const receiptSection = document.getElementById("receiptSection");
+  if (!receiptSection) return alert("Receipt section not found!");
 
-  if (!receiptSection) {
-    console.error("Receipt section not found!");
-    return;
-  }
-
-  const downloadBtn = document.querySelector(".download-btn");
-  downloadBtn.disabled = true;
-  downloadBtn.textContent = "Downloading...";
+  const saveBtn = document.querySelector(".save-btn");
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Saved";
 
   html2canvas(receiptSection, { scale: 2 })
     .then(canvas => {
@@ -461,15 +481,12 @@ function downloadReceipt() {
       link.download = "CityCare_Appointment_Receipt.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
-
-      // Reset button after download
-      downloadBtn.disabled = false;
-      downloadBtn.textContent = "Download Receipt";
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Save Receipt";
     })
-    .catch(err => {
-      console.error("Error generating receipt:", err);
-      alert("Failed to download receipt. Please try again.");
+    .catch(() => {
+      alert("Failed to save receipt. Please try again.");
       downloadBtn.disabled = false;
-      downloadBtn.textContent = "Download Receipt";
+      downloadBtn.textContent = "Save Receipt";
     });
 }

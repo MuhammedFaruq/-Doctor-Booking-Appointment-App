@@ -1,10 +1,4 @@
-/* =========================================================
-   GLOBAL STYLES
-   This part sets general page settings:
-   - Fonts
-   - Colors
-   - Reset spacing
-========================================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -19,9 +13,7 @@ body {
   line-height: 1.6;
 }
 
-/* =========================================================
-   HEADER & NAVIGATION BAR — Modern Blue Style
-========================================================= */
+/* HEADER & NAVIGATION BAR */
 header {
   background: linear-gradient(90deg, #0A3D7B, rgb(0, 0, 0)  );
   color: #fff;
@@ -82,9 +74,7 @@ nav a:hover {
   background: #0056d2;
 }
 
-/* ================================
-   MOBILE MENU (SLIDE DRAWER)
-================================ */
+/* MOBILE MENU (SLIDE DRAWER) */
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -169,6 +159,10 @@ nav a:hover {
   font-size: 1rem;
 }
 
+.drawer-auth .logout-btn{
+  width: 200px;
+}
+
 /* Hide normal nav on mobile */
 @media (max-width: 768px) {
   .header-top {
@@ -192,15 +186,13 @@ nav a:hover {
 }
 
 
-/* =========================================================
-   HERO SECTION (Top section with background image)
-========================================================= */
+/* HERO SECTION */
 .hero {
   position: relative;
-  background: url('https://images.unsplash.com/photo-1758691462123-8a17ae95d203?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1032')
+  background: url('services\ doc\ 1.jpg')
     center/cover no-repeat;
   color: #fff;
-  height: 600px;
+  height: 570px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,7 +213,7 @@ nav a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* dark overlay so text pops */
+  background: rgba(0, 0, 0, 0.5); 
   z-index: 1;
 }
 
@@ -259,10 +251,7 @@ nav a:hover {
 }
 
 
-/* =========================================================
-   GENERAL SECTION STYLE
-   Used for About, Services, Doctors, etc.
-========================================================= */
+/* GENERAL SECTION STYLE Used for About, Services, Doctors, etc.*/
 section {
   padding: 60px 10%;
   text-align: center;
@@ -275,9 +264,7 @@ section {
   color: #1976D2;
 }
 
-/* =========================================================
-   FEATURE CARDS (Under Hero)
-========================================================= */
+/* FEATURE CARDS */
 .features {
   display: flex;
   justify-content: center;
@@ -310,18 +297,14 @@ section {
 }
 
 
-/* =========================================================
-   ABOUT SECTION
-========================================================= */
+/* ABOUT SECTION */
 .about p {
   max-width: 700px;
   margin: auto;
   font-size: 1.1em;
 }
 
-/* =========================================================
-   SERVICES SECTION
-========================================================= */
+/* SERVICES SECTION */
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -348,9 +331,7 @@ section {
 
 
 
-/* =========================================================
-   DOCTOR SECTION (Professional Modern Grid Layout)
-========================================================= */
+/* DOCTOR SECTION */
 .doctors-section {
     background:  #d8d7d9;
   padding: 60px 10%;
@@ -399,28 +380,79 @@ section {
 /* Doctor cards grid layout */
 .doctors-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* ✅ makes it responsive */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* responsive columns */
   gap: 30px;
   justify-items: center;
   align-items: stretch;
-  padding: 10px 0;
+  padding: 30px 10px;
 }
 
 /* Individual doctor card */
-.doctors-grid .card {
+.doctor-card {
   background: #ffffff;
   border-radius: 12px;
-  padding: 25px 20px;
+  padding: 20px;
   width: 100%;
   max-width: 300px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
 }
 
-.doctors-grid .card:hover {
+.doctor-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Doctor image */
+.doctor-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Doctor name */
+.doctor-card h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+/* Specialty text */
+.doctor-card .specialty {
+  color: #0077b6;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* Address & fee */
+.doctor-card p {
+  color: #555;
+  margin: 4px 0;
+}
+
+.doctor-card .fee {
+  color: #0a9396;
+  font-weight: bold;
+}
+
+/* Book button */
+.doctor-card .book-btn {
+  background: #0077b6;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.doctor-card .book-btn:hover {
+  background: #023e8a;
 }
 
 /* Doctor photo */
@@ -471,9 +503,7 @@ section {
 }
 
 
-/* =========================================================
-   BOOKING MODAL — FIXED SIZE, PERFECTLY RESPONSIVE
-========================================================= */
+/* BOOKING MODAL */
 .booking-modal {
   display: none;
   justify-content: center;
@@ -483,7 +513,7 @@ section {
   background: rgba(0, 0, 0, 0.6);
   z-index: 3000;
   padding: 20px;
-  overflow-y: auto; /* ✅ allows scrolling on smaller screens */
+  overflow-y: auto; /* allows scrolling on smaller screens */
   backdrop-filter: blur(3px);
 }
 
@@ -492,7 +522,7 @@ section {
   background: #fff;
   border-radius: 10px;
   width: 100%;
-  max-width: 700px; /* ✅ smaller for desktop */
+  max-width: 700px; /* smaller for desktop */
   padding: 25px 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -658,7 +688,7 @@ section {
   gap: 10px;
   margin-top: 20px;
 }
-.download-btn, .done-btn {
+.save-btn, .done-btn {
   background: #1976D2;
   color: white;
   border: none;
@@ -673,75 +703,7 @@ section {
   background: #218838;
 }
 
-
-/* ===========================================
-   PATIENT DASHBOARD POPUP STYLE
-=========================================== */
-.dashboard-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.dashboard-content {
-  background: #fff;
-  width: 90%;
-  max-width: 700px;
-  border-radius: 10px;
-  padding: 25px;
-  position: relative;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.dashboard-content h2 {
-  color: #0D47A1;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: #333;
-}
-
-.appointments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.appointment-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  background: #f9f9f9;
-}
-
-.appointment-card h3 {
-  color: #1976D2;
-  margin-bottom: 5px;
-}
-
-
-
-/* =========================================================
-   RECEIPT DESIGN (Confirmation slip after booking)
-========================================================= */
+/* RECEIPT */
 #receiptSection {
   display: none;
   background: #fff;
@@ -785,7 +747,6 @@ section {
   color: #333;
 }
 
-/* Title and small note */
 #receiptSection h3 {
   text-align: center;
   color: #2E7D32;
@@ -795,16 +756,14 @@ section {
 
 #receiptSection p.note {
   text-align: center;
-  color: #666;
-  margin-top: 20px;
-  font-style: italic;
-  font-size: 0.9em;
+  color: #333;
+  margin-top: 15px;
+  font-family: 'Franklin Gothic Medium';
+  font-size: 1em;
 }
 
 
-/* =========================================================
-   CONTACT SECTION (Professional Layout)
-========================================================= */
+/* CONTACT SECTION */
 #contact {
   background: #f9fbfd;
   padding: 70px 10%;
@@ -909,9 +868,7 @@ section {
   background: #0D47A1;
 }
 
-/* =========================================================
-   FOOTER (Professional Layout)
-========================================================= */
+/* FOOTER */
 footer {
  background: linear-gradient(90deg, #0A3D7B, rgb(0, 0, 0)  );
   color: #fff;
@@ -984,9 +941,7 @@ footer {
 
 
 
-/* =========================================================
-   RESPONSIVE DESIGN (For phones and tablets)
-========================================================= */
+/* RESPONSIVE DESIGN (For phones and tablets) */
 @media (max-width: 768px) {
   .modal-body {
     flex-direction: column;
@@ -998,10 +953,7 @@ footer {
   }
 }
 
-/* =========================================================
-   DOCTOR DASHBOARD STYLES
-   Page where doctors see their appointments
-========================================================= */
+/* CITYCARE DOCTOR DASHBOARD */
 header a {
   color: #fff;
   text-decoration: none;
@@ -1078,13 +1030,13 @@ table tbody tr:nth-child(even) {
 
 /* Error message style for form validation */
 .error-message {
-  color: #e74c3c;       /* red color for visibility */
+  color: #e74c3c;  
   font-size: 13px;
   margin-top: 4px;
   font-family: 'Open Sans', sans-serif;
 }
 
-/* ===== AUTH MODALS (Login & Register) ===== */
+/* USER AUTHENTICATION (REGISTER / LOGIN)*/
 .modal {
   display: none;
   position: fixed;
@@ -1199,7 +1151,7 @@ table tbody tr:nth-child(even) {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ==== BUTTON STYLES ==== */
+/* BUTTON STYLES  */
 .btn {
   background-color: #007bff;
   border: none;
@@ -1227,7 +1179,7 @@ table tbody tr:nth-child(even) {
   text-decoration: underline;
 }
 
-/* ==== MODAL BACKGROUND ==== */
+/* MODAL BACKGROUND */
 .modal {
   display: none; /* hidden by default */
   position: fixed;
@@ -1241,7 +1193,7 @@ table tbody tr:nth-child(even) {
   padding: 10px;
 }
 
-/* ==== MODAL BOX ==== */
+/* MODAL BOX  */
 .modal-content {
   background-color: #ffffff;
   color: #000000;
@@ -1260,7 +1212,7 @@ table tbody tr:nth-child(even) {
   to {opacity: 1; transform: scale(1);}
 }
 
-/* ==== CLOSE BUTTON ==== */
+/* CLOSE BUTTON  */
 .modal-close {
   position: absolute;
   top: 10px;
@@ -1273,7 +1225,7 @@ table tbody tr:nth-child(even) {
   transition: color 0.2s;
 }
 
-/* ==== FORM ELEMENTS ==== */
+/* FORM ELEMENTS  */
 form {
   display: flex;
   flex-direction: column;
@@ -1302,21 +1254,21 @@ input:focus {
   border-color: #00b4ff;
 }
 
-/* ==== FORM NOTE ==== */
+/* FORM NOTE  */
 .form-note {
   font-size: 13px;
   text-align: center;
   margin-top: 10px;
 }
 
-/* ==== ERROR TEXT ==== */
+/* ERROR TEXT */
 .error-text, .form-error {
   color: #ff5555;
   font-size: 13px;
   height: 16px;
 }
 
-/* ==== RESPONSIVENESS ==== */
+/* RESPONSIVENESS */
 @media (max-width: 500px) {
   .modal-content {
     width: 95%;
@@ -1332,3 +1284,15 @@ input:focus {
   }
 }
 
+.error-text {
+  color: red;
+  font-size: 13px;
+  margin-top: 3px;
+  display: block;
+}
+
+#noDoctorMessage {
+  font-size: 25px;
+  color: #666;
+  text-align: center;
+}
